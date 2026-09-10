@@ -20,9 +20,6 @@ void main( void )
     vec3 dark = vec3(0.08235294117647059, 0.1450980392156863, 0.29411764705882354);
 
     vec2 uv = outTexCoord;
-    // //uv.y *= -1.0;
-    // uv.y += (sin((uv.x + (uTime * 0.5)) * 10.0) * 0.1) + (sin((uv.x + (uTime * 0.2)) * 32.0) * 0.01);
-    // gl_FragColor = texColor;
     
     vec4 texColorIn = texture2D(uMainSampler, uv);
     vec3 texColorOut;
@@ -38,7 +35,6 @@ void main( void )
         texColorOut = dark;
     }
     
-    // gl_FragColor = texture2D(uMainSampler, outTexCoord);
     gl_FragColor = vec4(
         texColorOut,
         1.

@@ -25,13 +25,6 @@ export class Game extends Scene
 
     create ()
     {
-        // // When loading a CSV map, make sure to specify the tileWidth and tileHeight
-        // this.map = this.make.tilemap({ key: 'map', tileWidth: 16, tileHeight: 16 });
-        // const tileset = this.map.addTilesetImage('tiles');
-        // const layer = this.map.createLayer(0, tileset, 0, 0);
-
-        // //  This isn't totally accurate, but it'll do for now
-        // this.map.setCollision(7);
 
         this.currentBottom = 0;
         this.currentMiddle = 0;
@@ -51,7 +44,6 @@ export class Game extends Scene
 
         this.tiles = this.add.group()
         this.tiles.runChildUpdate = true;
-        // console.dir(this.tiles);
 
 
         this.player = this.physics.add.sprite(32, 32, 'player')
@@ -60,10 +52,6 @@ export class Game extends Scene
             .setDepth(10);
 
         this.alive = true;
-
-        // // Set up the player to collide with the tilemap layer. Alternatively, you can manually run
-        // // collisions in update via: this.physics.world.collide(player, layer).
-        // this.physics.add.collider(this.player, layer);
 
         this.cameras.main.setBounds(0, 0, 999999999, 64)
             .startFollow(this.player)
@@ -117,7 +105,6 @@ export class Game extends Scene
             });
         }
 
-        // console.log(this.cameras.main.worldView.right);
         while (this.cameras.main.worldView.right * TREE_SCROLL_FACTOR > this.currentMiddle * 16 - 48) {
             let x = this.currentMiddle * 16 - 16;
             if (this.treeCounter >= this.nextTree) {
@@ -166,7 +153,6 @@ export class Game extends Scene
         }
 
         this.text.setText([
-            // this.tiles.children.size
         ]);
 
         if (this.alive) {

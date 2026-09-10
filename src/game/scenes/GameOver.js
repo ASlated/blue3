@@ -32,8 +32,6 @@ export class GameOver extends Scene
 
         let scoreText = this.add.bitmapText(56, 54, 'font', this.score).setOrigin(0);
         scoreText.setX(32 - Math.floor(scoreText.width / 2));
-        
-        // this.cameras.main.fadeIn(500);
     }
 
     restartGame() {
