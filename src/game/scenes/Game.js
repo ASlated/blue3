@@ -84,13 +84,20 @@ export class Game extends Scene
             .setSize(6, 16);
 
         this.cameras.main.on('camerafadeoutcomplete', () => {
-            this.scene.start('GameOver');
+            this.scene.start('GameOver', {score: this.getScore()});
         });
 
         this.text = this.add.text(0, 0, '', {fontSize: "16px", color: "#000"})
             .setOrigin(0)
             .setDepth(20)
             .setScrollFactor(0);
+
+
+        this.score = 0;
+        this.scoreText = this.add.bitmapText(63, 1, 'font', '0')
+            .setScrollFactor(0)
+            .setOrigin(1, 0)
+            .setDepth(20);
             
     }
 
@@ -103,7 +110,7 @@ export class Game extends Scene
                 callback: () => {
                     this.cameras.main
                         .stopFollow()
-                        .fade(500 );
+                        .fade(500);
                 }
             });
         }
@@ -159,6 +166,11 @@ export class Game extends Scene
         this.text.setText([
             // this.tiles.children.size
         ]);
+
+        if (this.alive) {
+            this.score++;
+        }
+        this.scoreText.setText(this.getScore());
     }
     
     setNextTree()
@@ -174,5 +186,9 @@ export class Game extends Scene
     setNextChasm(offset = 0)
     {
         this.nextChasm = Math.floor(Math.random() * 4) + offset;
+    }
+
+    getScore() {
+        return Math.floor(this.score / 10) * 10;
     }
 }

@@ -1,4 +1,4 @@
-import { Scene } from 'phaser';
+import { Scene, GameObjects } from 'phaser';
 
 export class Preloader extends Scene
 {
@@ -37,6 +37,8 @@ export class Preloader extends Scene
         this.load.spritesheet('tiles', 'blue3tiles.png', {frameWidth: 16, frameHeight: 16});
 
         this.load.image('game-over', 'game_over.png');
+
+        this.load.image('font', 'font.png');
     }
 
     create ()
@@ -53,7 +55,17 @@ export class Preloader extends Scene
             repeat: -1
         });
 
+        this.cache.bitmapFont.add('font', GameObjects.RetroFont.Parse(this, {
+            image: 'font',
+            width: 4,
+            height: 5,
+            chars: '0123456789',
+            charsPerRow: 10,
+            spacing: { x: 0, y: 0 }
+        }));
+
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start('Game');
+        // this.scene.start('GameOver');
     }
 }
