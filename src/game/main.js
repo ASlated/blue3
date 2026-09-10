@@ -13,7 +13,7 @@ const config = {
     width: 64,
     height: 64,
     parent: 'game-container',
-    backgroundColor: '#028af8',
+    backgroundColor: '#15254b',
     pixelArt: true,
     roundPixels: true,
     scale: {
