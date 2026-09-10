@@ -1,5 +1,6 @@
 import { Scene, GameObjects, Geom } from 'phaser';
 import { Tile } from '../gameobjects/Tile';
+import BendWaves from '../shaders/FilterBendWaves.js';
 
 const TREE_SCROLL_FACTOR = 0.5;
 const CLOUD_SCROLL_FACTOR = 0.25;
@@ -104,7 +105,6 @@ export class Game extends Scene
             .setScrollFactor(0)
             .setOrigin(1, 0)
             .setDepth(20);
-            
     }
 
     update()
@@ -112,11 +112,11 @@ export class Game extends Scene
         if (this.player.y > 48 && this.alive) {
             this.alive = false;
             this.cameras.main.stopFollow();
+            this.cameras.main.filters.external.add(new BendWaves.Controller(this.cameras.main));
             this.time.addEvent({
-                delay: 1000,
+                delay: 500,
                 callback: () => {
-                    this.cameras.main
-                        .fade(500);
+                    this.scene.start('GameOver');
                 }
             });
         }

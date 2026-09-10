@@ -3,6 +3,7 @@ import { Game as MainGame } from './scenes/Game';
 import { Preloader } from './scenes/Preloader';
 import { GameOver } from './scenes/GameOver';
 import { AUTO, Game, Scale } from 'phaser';
+import BendWaves from './shaders/FilterBendWaves.js';
 
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
@@ -23,7 +24,10 @@ const config = {
         Preloader,
         MainGame,
         GameOver
-    ]
+    ],
+    renderNodes: {
+        FilterBendWaves: BendWaves.Filter
+    }
 };
 
 const StartGame = (parent) => {
