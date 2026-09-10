@@ -37,8 +37,12 @@ export class Preloader extends Scene
         this.load.spritesheet('tiles', 'blue3tiles.png', {frameWidth: 16, frameHeight: 16});
 
         this.load.image('game-over', 'game_over.png');
+        this.load.image('title', 'title.png');
 
         this.load.image('font', 'font.png');
+        
+        this.load.audio('music', ['blue3-main.mp3', 'blue3-main.ogg']);
+        this.load.audio('music-gameover', ['blue3-gameover.mp3', 'blue3-gameover.ogg']);
     }
 
     create ()
@@ -62,6 +66,6 @@ export class Preloader extends Scene
             spacing: { x: 0, y: 0 }
         }));
 
-        this.scene.start('Game');
+        this.scene.start('MainMenu');
     }
 }

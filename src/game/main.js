@@ -1,6 +1,7 @@
 import { Boot } from './scenes/Boot';
 import { Game as MainGame } from './scenes/Game';
 import { Preloader } from './scenes/Preloader';
+import { MainMenu } from './scenes/MainMenu';
 import { GameOver } from './scenes/GameOver';
 import { AUTO, Game, Scale } from 'phaser';
 import BendWaves from './shaders/FilterBendWaves.js';
@@ -22,6 +23,7 @@ const config = {
     scene: [
         Boot,
         Preloader,
+        MainMenu,
         MainGame,
         GameOver
     ],

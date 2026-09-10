@@ -32,14 +32,19 @@ export class GameOver extends Scene
 
         let scoreText = this.add.bitmapText(56, 54, 'font', this.score).setOrigin(0);
         scoreText.setX(32 - Math.floor(scoreText.width / 2));
+
+        this.music = this.sound.add('music-gameover')
+        this.music.play({loop: -1});
     }
 
     restartGame() {
         if (!this.filterStarted) {
+            this.filterStarted = true
             this.cameras.main.filters.external.add(new BendWaves.Controller(this.cameras.main));
             this.time.addEvent({
                 delay: 500,
                 callback: () => {
+                    this.music.stop();
                     this.scene.start('Game');
                 }
             });

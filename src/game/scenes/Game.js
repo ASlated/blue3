@@ -28,6 +28,8 @@ export class Game extends Scene
 
     create ()
     {
+        this.music = this.sound.add('music')
+        this.music.play({loop: -1});
 
         this.currentBottom = 0;
         this.currentMiddle = 0;
@@ -101,10 +103,6 @@ export class Game extends Scene
             this.jumpButtonDown = false;
         }
 
-        if (this.jumpButtonDown && this.player.body.blocked.down) {
-            this.player.setVelocityY(JUMP_VELOCITY);
-        }
-
         // --- HANG TIME LOGIC ---
         // If holding the jump key while moving upward, reduce gravity
         if (this.jumpButtonDown && this.player.body.velocity.y < 0) {
@@ -121,6 +119,7 @@ export class Game extends Scene
             this.time.addEvent({
                 delay: 500,
                 callback: () => {
+                    this.music.stop();
                     this.scene.start('GameOver', {score: this.getScore()});
                 }
             });
@@ -205,6 +204,5 @@ export class Game extends Scene
         if (this.player.body.blocked.down) {
             this.player.setVelocityY(JUMP_VELOCITY);
         }
-
     }
 }
