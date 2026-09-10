@@ -1,10 +1,13 @@
-import { Scene, GameObjects, Geom } from 'phaser';
+import { Scene, GameObjects, Input } from 'phaser';
 import { Tile } from '../gameobjects/Tile';
 import BendWaves from '../shaders/FilterBendWaves.js';
 
 const TREE_SCROLL_FACTOR = 0.5;
 const CLOUD_SCROLL_FACTOR = 0.25;
 
+const JUMP_VELOCITY = -150; // Initial jump burst
+const HANG_GRAVITY = 400;   // Reduced gravity during peak/hold
+const NORMAL_GRAVITY = 1500;
 
 export class Game extends Scene
 {
@@ -15,7 +18,7 @@ export class Game extends Scene
             physics: {
                 arcade: {
                     // gravity: { y: 0 },
-                    gravity: { y: 1500 },
+                    // gravity: { y: 1500 },
                     debug: false,
                     fps: 240
                 }
@@ -45,6 +48,8 @@ export class Game extends Scene
         this.tiles = this.add.group()
         this.tiles.runChildUpdate = true;
 
+        this.jumpButtonDown = false;
+        this.space = this.input.keyboard.addKey(Input.Keyboard.KeyCodes.SPACE);
 
         this.player = this.physics.add.sprite(32, 32, 'player')
             .play('player-walk')
@@ -61,22 +66,19 @@ export class Game extends Scene
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.input.keyboard.on('keydown-SPACE', () => {
-            if (this.player.body.blocked.down) {
-                this.player.setVelocityY(-250 );
-            }
+            this.jump();
         })
         
         this.input.on('pointerdown', () => {
-            if (this.player.body.blocked.down) {
-                this.player.setVelocityY(-250 );
-            }
+            this.jump();            
         })
         
         this.player.body
             .setVelocityX(50)
             .setAccelerationX(1)
             .setOffset(3, 1)
-            .setSize(6, 16);
+            .setSize(6, 16)
+            .setGravityY(NORMAL_GRAVITY);
 
         this.text = this.add.text(0, 0, '', {fontSize: "16px", color: "#000"})
             .setOrigin(0)
@@ -93,6 +95,25 @@ export class Game extends Scene
 
     update()
     {
+        if (this.space.isDown || this.input.activePointer.isDown) {
+            this.jumpButtonDown = true;
+        } else {
+            this.jumpButtonDown = false;
+        }
+
+        if (this.jumpButtonDown && this.player.body.blocked.down) {
+            this.player.setVelocityY(JUMP_VELOCITY);
+        }
+
+        // --- HANG TIME LOGIC ---
+        // If holding the jump key while moving upward, reduce gravity
+        if (this.jumpButtonDown && this.player.body.velocity.y < 0) {
+            this.player.body.setGravityY(HANG_GRAVITY);
+        } else {
+            // Reset to normal gravity when they let go or start falling
+            this.player.body.setGravityY(NORMAL_GRAVITY);
+        }
+
         if (this.player.y > 48 && this.alive) {
             this.alive = false;
             this.cameras.main.stopFollow();
@@ -178,5 +199,12 @@ export class Game extends Scene
 
     getScore() {
         return Math.floor(this.score / 10) * 10;
+    }
+
+    jump() {
+        if (this.player.body.blocked.down) {
+            this.player.setVelocityY(JUMP_VELOCITY);
+        }
+
     }
 }
