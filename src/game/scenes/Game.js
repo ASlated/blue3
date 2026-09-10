@@ -90,10 +90,6 @@ export class Game extends Scene
             .setOffset(3, 1)
             .setSize(6, 16);
 
-        this.cameras.main.on('camerafadeoutcomplete', () => {
-            this.scene.start('GameOver', {score: this.getScore()});
-        });
-
         this.text = this.add.text(0, 0, '', {fontSize: "16px", color: "#000"})
             .setOrigin(0)
             .setDepth(20)
@@ -116,7 +112,7 @@ export class Game extends Scene
             this.time.addEvent({
                 delay: 500,
                 callback: () => {
-                    this.scene.start('GameOver');
+                    this.scene.start('GameOver', {score: this.getScore()});
                 }
             });
         }
