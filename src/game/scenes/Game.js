@@ -111,11 +111,11 @@ export class Game extends Scene
     {
         if (this.player.y > 48 && this.alive) {
             this.alive = false;
+            this.cameras.main.stopFollow();
             this.time.addEvent({
                 delay: 1000,
                 callback: () => {
                     this.cameras.main
-                        .stopFollow()
                         .fade(500);
                 }
             });
