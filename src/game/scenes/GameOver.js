@@ -27,6 +27,14 @@ export class GameOver extends Scene
             });
         });
 
+        this.input.on('pointerdown', () => {
+            this.cameras.main.fade(500, 0, 0, 0, false, (_camera, progress) => {
+                if (progress >= 1) {
+                    this.scene.start('Game'); 
+                }
+            });
+        });
+
         let scoreText = this.add.bitmapText(56, 54, 'font', this.score).setOrigin(0);
         scoreText.setX(32 - Math.floor(scoreText.width / 2));
         

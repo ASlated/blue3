@@ -77,6 +77,12 @@ export class Game extends Scene
             }
         })
         
+        this.input.on('pointerdown', () => {
+            if (this.player.body.blocked.down) {
+                this.player.setVelocityY(-250 );
+            }
+        })
+        
         this.player.body
             .setVelocityX(50)
             .setAccelerationX(1)

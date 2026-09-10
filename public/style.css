@@ -13,3 +13,20 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+html {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+canvas {
+    margin: 0;
+    padding: 0;
+}
